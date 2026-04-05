@@ -1,7 +1,4 @@
-from abc import abstractmethod
-
 import numpy as np
-
 
 def relu(z):
     return np.maximum(0,z)
@@ -24,3 +21,10 @@ def linear(z):
 
 def linear_derivative(z):
     return np.ones_like(z)
+
+def tanh(z):
+    return np.tanh(z)
+
+def tanh_derivative(z):
+    # Izvod je 1 - tanh^2(z)
+    return 1 - np.power(np.tanh(z), 2)

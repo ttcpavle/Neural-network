@@ -1,12 +1,10 @@
 #%%
-
 from random import randint
 import matplotlib.pyplot as plt
 import seaborn as sb
 from ActivationFunctions import *
 from Layer import Layer
 from NeuralNetwork import NeuralNetwork
-
 
 def load_mnist_images(filename):
     with open(filename, 'rb') as f:
@@ -36,10 +34,13 @@ test_images = load_mnist_images('data/digits/t10k-images-idx3-ubyte/t10k-images-
 test_labels = load_mnist_labels('data/digits/t10k-labels-idx1-ubyte/t10k-labels-idx1-ubyte')
 
 # priprema target vektora kao one_hot
-train_labels_one_hot = to_one_hot(train_labels)
-test_labels_one_hot = to_one_hot(test_labels)
+train_labels_one_hot = to_one_hot(train_labels).reshape(60000, 10, 1)
+test_labels_one_hot = to_one_hot(test_labels).reshape(10000, 10, 1)
 
-# OVDE BI TREBAO SHAPE da se podesi kako treba
+print(train_images.shape)
+print(test_images.shape)
+print(train_labels_one_hot.shape)
+print(test_labels_one_hot.shape)
 
 #%%
 # prikaz cifre kroz heatmap (zbog pregleda)
@@ -56,7 +57,7 @@ plt.show()
 # 2 - kreiranje neuronske mreze
 learning_rate = 0.01
 nn = NeuralNetwork([
-    Layer(784, 128, relu, relu_derivative),
+    Layer(784, 128, tanh, tanh_derivative),
     Layer(128, 10, softmax, None)
 ], learning_rate, method="softmax+cce")
 #%%

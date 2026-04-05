@@ -18,9 +18,6 @@ class NeuralNetwork:
         return activations
 
     def gradient_step(self, x, y):
-        # ovo promeniti. Podaci trebaju biti sredjeni pre treniranja.
-        x = np.array(x).reshape(-1, 1)
-        y = np.array(y).reshape(-1, 1)
 
         # 1 - racunanje svih aktivacija na zadati ulaz. Forward pass
         self.predict(x)
