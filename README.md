@@ -44,7 +44,7 @@ $$\frac{dz}{dx} = \frac{dz}{dy} \cdot \frac{dy}{dx}$$
 
 ___
 
-Dakle, želimo da formiramo gradijent funkcije $C$ kako bi smo mogli da je minimiziramo (koristeći gradient descent). Da bi to uradili trebaju nam uticaji trenutnih parametara modela (weights and biases) na cost, tj parcijalni izvodi po tim parametrima. Želimo da ispitamo osetljivost modela na promene težina.
+Dakle, želimo da formiramo gradijent funkcije $C$ kako bi smo mogli da je minimiziramo (koristeći gradient descent). Da bi to uradili trebaju nam uticaji trenutnih parametara modela (weights and biases) na cost, tj parcijalni izvodi po tim parametrima. Jer kada treniramo model ulaz x je konstanta a promenljive cost funkcije su sada parametri modela. Parametri se ponašaju kao konstante u forward pass-u a ponašaju se kao promenljive u backward passu. Ovo se u matematici naziva dualnost.
 
 $$\frac{\partial C}{\partial w} = \frac{\partial C}{\partial a} \cdot \frac{\partial a}{\partial z} \cdot \frac{\partial z}{\partial w}$$
 
@@ -82,7 +82,7 @@ $$\frac{da^l}{dz^l} = \left[\begin{matrix} f'(z_1^l) & 0 & \dots \cr 0 & f'(z_2^
 
 Množenje matrica $A \cdot B$ gde je B dijagonalna matrica, isto je što i $A \odot C$ gde je C vektor kolona sa elementima dijagonale matrice B.
 
-U matematici, vektor gradijent jednak je transponovanom total derivative vektoru. Tj gradijent je vektor kolona a total derivative vektor red. 
+Cost funkcija je funkcije $C: R^n \rightarrow R$ i njen totalni diferencijal je jakobijeva matrica sa jednim redom, koja kada se transponuje daje vektor gradijenta.
 Primenom pravila: $(A \cdot B)^T = B^T \cdot A^T$ dobija se gradijent cost funkcije: 
 
 $$\nabla_x C = (W^1)^T \cdot (f^1)' \odot \dots \odot (W^{L-1})^T \cdot (f^{L-1})' \odot (W^L)^T \cdot (f^L)' \odot \nabla_{a^L} C$$
@@ -111,6 +111,7 @@ $$\frac{\partial C}{\partial w_{jk}^l} = \delta_j^l \cdot a_k^{l-1}$$
 
 Što smo ranije pokazali.
 
+**Dakle da bi našli izvod cost funkcije po nekoj težini, treba nam delta neurona narednog sloja i aktivacija neurona prethodnog sloja. Dakle čim izračunamo deltu za sloj neurona krećući se u nazad, i pošto imamo keširano aktivacije sloja pre, možemo na licu mesta da ažuriramo sve težine na vezi između ova 2 sloja.**
 ___
 
 Sada imamo 4 ključne jednačine za backpropagation:
